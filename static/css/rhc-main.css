@@ -163,3 +163,15 @@
 .accordion.secondary .accordion-button:not(.collapsed) {
     color: var(--light-text);
 }
+
+/* very small viewport for Experience cards */
+@media only screen and (max-width: 375px) {
+    .hero p {
+        padding: 0 1.2rem;
+    }
+
+    .btn {
+        margin: 0 1rem;
+        font-size: medium !important;
+    }
+}
