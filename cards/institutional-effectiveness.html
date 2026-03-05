@@ -60,6 +60,20 @@
       background: rgba(var(--rio-med-blue-rgb), 0.5);
       color: var(--light-text);
     }
+
+    .list-group-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .list-group-item i {
+      flex-shrink: 0;
+    }
+
+    .list-group-item-text {
+      flex: 1;
+    }
   </style>
 </head>
 
@@ -69,25 +83,32 @@
       <div class="list-group">
         <!-- IE resources -->
         <a href="https://riohondo0.sharepoint.com/sites/IECampusResources" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action">
-          <i class="fas fa-certificate me-2"></i>Accreditation
+          <i class="fas fa-certificate"></i>
+          <span class="list-group-item-text">Accreditation</span>
         </a>
         <a href="https://riohondo0.sharepoint.com/sites/IECampusResources" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action">
-          <i class="fas fa-bullseye me-2"></i>Institutional Goals &amp; Objectives
+          <i class="fas fa-bullseye"></i>
+          <span class="list-group-item-text">Institutional Goals &amp; Objectives</span>
         </a>
         <a href="https://riohondo0.sharepoint.com/sites/IECampusResources" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action">
-          <i class="fas fa-calendar-alt me-2"></i>Planning &amp; Program Review
+          <i class="fas fa-calendar-alt"></i>
+          <span class="list-group-item-text">Planning &amp; Program Review</span>
         </a>
         <a href="https://riohondo0.sharepoint.com/sites/IECampusResources" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action">
-          <i class="fas fa-search me-2"></i>Research (Including Tableau Dashboards)
+          <i class="fas fa-search"></i>
+          <span class="list-group-item-text">Research (Including Tableau Dashboards)</span>
         </a>
         <a href="https://www.riohondo.edu/irp/research-request/" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action">
-          <i class="fas fa-clipboard-list me-2"></i>Survey &amp; Research Request Forms
+          <i class="fas fa-clipboard-list"></i>
+          <span class="list-group-item-text">Survey &amp; Research Request Forms</span>
         </a>
         <a href="https://www.dropbox.com/sh/gmdr8xz196ycewa/AADLZWYphXl6UwI8c-4kpalEa?dl=0" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action">
-          <i class="fas fa-history me-2"></i>IEC Agendas &amp; Minutes 2014-2019
+          <i class="fas fa-history"></i>
+          <span class="list-group-item-text">IEC Agendas &amp; Minutes 2014-2019</span>
         </a>
         <a href="https://go.boarddocs.com/ca/riohondo/Board.nsf/goto?open&amp;id=BS8L4D54B7B9" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action">
-          <i class="fas fa-book-open me-2"></i>IEC Agendas &amp; Minutes 2020-Current
+          <i class="fas fa-book-open"></i>
+          <span class="list-group-item-text">IEC Agendas &amp; Minutes 2020-Current</span>
         </a>
       </div>
     </div>
