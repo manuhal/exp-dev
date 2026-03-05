@@ -1,0 +1,161 @@
+/* Rio palette :root */
+:root {
+    --rio-gold: #f9c900;
+    --rio-dark-gray: #414042;
+    --rio-dark-blue: #2A6491;
+    --rio-med-blue: #2A96C6;
+    --rio-green: #33A961;
+    --light-text: #ffffff;
+    --dark-text: #404040;
+
+    /* Bootstrap variables – using Rio colors */
+    --bs-primary: var(--rio-gold);
+    --bs-primary-rgb: 249, 201, 0;
+    --bs-secondary: var(--rio-dark-gray);
+    --bs-secondary-rgb: 65, 64, 66;
+
+    /*
+    alternative secondary options with the rgb values for focus shadows: 
+    --bs-secondary: var(--rio-dark-blue);
+    --bs-secondary-rgb: 42, 100, 145; 
+    --bs-secondary: var(--rio-med-blue);
+    --bs-secondary-rgb: 42, 150, 198; 
+    --bs-secondary: var(--rio-green);
+    --bs-secondary-rgb: 51, 169, 97;
+
+    */
+
+    /* Primary subtle family: keep hue, big tint toward white */
+    --bs-primary-bg-subtle: color-mix(in srgb, var(--bs-primary) 80%, white 20%);
+    --bs-primary-border-subtle: color-mix(in srgb, var(--bs-primary) 20%, white 80%);
+    --bs-primary-text-emphasis: color-mix(in srgb, var(--bs-primary) 80%, black 20%);
+
+    /* Secondary subtle family (dark blue) – similar logic */
+    --bs-secondary-bg-subtle: color-mix(in srgb, var(--bs-secondary) 10%, white 90%);
+    --bs-secondary-border-subtle: color-mix(in srgb, var(--bs-secondary) 25%, white 75%);
+    --bs-secondary-text-emphasis: color-mix(in srgb, var(--bs-secondary) 85%, black 15%);
+
+    /* overrides bootstrap default colors */
+    --bs-success: var(--rio-green);
+    --bs-success-rgb: 51, 169, 97;
+    --bs-danger: #c82333;
+    --bs-danger-rgb: 200, 35, 51;
+    --bs-warning: var(--rio-gold);
+    --bs-warning-rgb: 249, 201, 0;
+    --bs-info: #17a2b8;
+    --bs-info-rgb: 23, 162, 184;
+    --bs-light: #f8f9fa;
+    --bs-light-rgb: 248, 249, 250;
+    --bs-dark: var(--rio-dark-gray);
+    --bs-dark-rgb: 65, 64, 66;
+
+    /* Optional: tweak some Bootstrap defaults for card feel */
+    --bs-body-bg: #ffffff;
+    --bs-body-color: var(--dark-text);
+}
+
+/* Dark mode overrides (Bootstrap auto-handles via data-bs-theme="dark") */
+[data-bs-theme="dark"] {
+    --bs-body-bg: #121212;
+    --bs-body-color: #e0e0e0;
+    --bs-primary: #ffd633;
+    --bs-primary-rgb: 255, 214, 51;
+}
+
+/* Custom Button Primary using --rio-gold */
+.btn-primary {
+    /* Base State */
+    --bs-btn-color: var(--dark-text);
+    --bs-btn-bg: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+
+    /* Hover State: slightly darker gold */
+    --bs-btn-hover-color: var(--dark-text);
+    --bs-btn-hover-bg: #e0b500;
+    --bs-btn-hover-border-color: #d1a800;
+
+    /* Active/Pressed State */
+    --bs-btn-active-color: var(--dark-text);
+    --bs-btn-active-bg: #d1a800;
+    --bs-btn-active-border-color: #c29a00;
+
+    /* Focus/Outline State */
+    --bs-btn-focus-shadow-rgb: 249, 201, 0;
+    /* Matches your --bs-primary-rgb */
+
+    /* Ensure the utility works if Bootstrap uses text-white internally */
+    color: var(--dark-text) !important;
+}
+
+/* Custom Button Secondary using --rio-dark-gray */
+.btn-secondary {
+    /* Base State */
+    --bs-btn-color: var(--light-text);
+    --bs-btn-bg: var(--bs-secondary);
+    --bs-btn-border-color: var(--bs-secondary);
+
+    /* Hover State: slightly darker gray */
+    --bs-btn-hover-color: var(--light-text);
+    --bs-btn-hover-bg: #2a2a2c;
+    --bs-btn-hover-border-color: #1f1f21;
+
+    /* Active/Pressed State */
+    --bs-btn-active-color: var(--light-text);
+    --bs-btn-active-bg: #1f1f21;
+    --bs-btn-active-border-color: #141415;
+
+    /* Focus/Outline State */
+    --bs-btn-focus-shadow-rgb: 65, 64, 66;
+    /* Matches --rio-dark-gray-rgb */
+
+    /* Ensure the utility works if Bootstrap uses text-white internally */
+    color: var(--light-text) !important;
+}
+
+/* Default Accordion overrides using --rio-gold (primary) */
+.accordion-button {
+    background-color: var(--bs-primary);
+    color: var(--dark-text);
+}
+
+.accordion-button:hover {
+    background-color: var(--bs-primary-bg-subtle);
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--dark-text);
+    font-weight: bold;
+    background-color: var(--bs-primary);
+    border-color: color-mix(in srgb, var(--bs-primary) 20%, black 80%);
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .25);
+}
+
+.accordion-button::after {
+    color: inherit;
+    filter: none;
+}
+
+/* Scope: use secondary palette for accordions with .secondary */
+.accordion.secondary {
+    /* make primary vars point to secondary for this accordion only */
+    --bs-primary: var(--bs-secondary);
+    --bs-primary-rgb: var(--bs-secondary-rgb);
+
+    /* recompute subtle/derived primary values locally */
+    --bs-primary-bg-subtle: color-mix(in srgb, var(--bs-primary) 80%, white 20%);
+    --bs-primary-border-subtle: color-mix(in srgb, var(--bs-primary) 20%, white 80%);
+    --bs-primary-text-emphasis: color-mix(in srgb, var(--bs-primary) 80%, black 20%);
+}
+
+/* ensure readable text on dark secondary */
+.accordion.secondary .accordion-button {
+    color: var(--light-text);
+}
+
+.accordion.secondary .accordion-button:not(.collapsed) {
+    color: var(--light-text);
+}

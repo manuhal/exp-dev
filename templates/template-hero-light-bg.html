@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RHC Card</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/rhc-main.css">
+
+  <style>
+    .hero {
+      min-height: 100vh;
+      background: url('../static/img/iheartrio-01-2024.webp') center center / cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      color: var(--rio-dark-gray, #333);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.85);
+      z-index: 1;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 1.5rem auto;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      /* padding: 75px 0; */
+    }
+
+    #headline-container {
+      position: relative;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 0 0.5rem;
+    }
+
+    #headline {
+      position: absolute;
+      color: var(--rio-med-blue);
+      text-align: center;
+      text-transform: uppercase;
+      opacity: 1;
+      font-weight: 800;
+      line-height: 1;
+      font-size: 1.7rem;
+    }
+
+    #headline a {
+      color: #fcfcfc;
+      text-decoration: underline;
+      text-decoration-color: #f9c900;
+      background-color: unset !important;
+    }
+
+    /* XS devices */
+    @media only screen and (max-width: 576px) {
+      #headline {
+        font-size: 1.3rem;
+      }
+
+      .hero p {
+        padding: 0 1.2rem;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.10/typed.min.js"></script>
+</head>
+
+<body>
+
+  <section class="hero text-center">
+    <div class="container">
+      <div id="headline-container">
+        <div id="headline">
+          <span id="typed"></span>
+        </div>
+      </div>
+      <p>
+        Welcome to the new AccessRío page. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam esse,
+        mollitia commodi sint sed totam ad quisquam vitae blanditiis ducimus ipsum doloribus quaerat. Sapiente et
+        perferendis neque provident voluptates magni?
+      </p>
+      <a href="#" class="btn btn-secondary btn-sm px-5 py-2">
+        Learn More
+      </a>
+    </div>
+  </section>
+
+
+  <script>
+    const phrases = [
+      "Welcome", //eng
+      "Bienvenido", //spa
+      "欢迎", //chi
+      "환영합니다", //kor
+      "Selamat Datang" //ind
+    ];
+
+    new Typed('#typed', {
+      strings: phrases,
+      typeSpeed: 100,
+      backSpeed: 40,
+      backDelay: 1200,
+      startDelay: 300,
+      loop: true,
+      showCursor: false,
+      cursorChar: '|',
+      smartBackspace: false
+    });
+  </script>
+  <!-- Bootstrap JS (optional - only if you need dropdowns, modals, etc) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
