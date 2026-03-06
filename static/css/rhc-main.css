@@ -12,6 +12,10 @@
     --rio-green-rgb: 51, 169, 97;
     --light-text: #ffffff;
     --dark-text: #404040;
+    
+    /* add dark-green to compliment rio-green color*/
+    --exp-dark-green: #1f7a3c;
+    --exp-dark-green-rgb: 31, 122, 60;
 
     /* Bootstrap variables – using Rio colors */
     --bs-primary: var(--rio-gold);
