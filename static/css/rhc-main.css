@@ -12,7 +12,7 @@
     --rio-green-rgb: 51, 169, 97;
     --light-text: #ffffff;
     --dark-text: #404040;
-    
+
     /* add dark-green to compliment rio-green color*/
     --exp-dark-green: #1f7a3c;
     --exp-dark-green-rgb: 31, 122, 60;
@@ -147,13 +147,6 @@
     filter: none;
 }
 
-/* Keep accordion icons in a fixed-width slot so titles align. */
-.accordion-button i {
-    width: 1.25rem;
-    text-align: center;
-    flex-shrink: 0;
-}
-
 /* Scope: use secondary palette for accordions with .secondary */
 .accordion.secondary {
     /* make primary vars point to secondary for this accordion only */
@@ -173,6 +166,18 @@
 
 .accordion.secondary .accordion-button:not(.collapsed) {
     color: var(--light-text);
+}
+
+/* adjust the icon sizes for accordion buttons and list group items */
+.accordion-button i {
+    width: 1.25rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+.list-group-item i {
+    flex-shrink: 0;
+    width: 1.25rem;
+    text-align: center;
 }
 
 /* very small viewport for Experience cards */
