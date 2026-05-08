@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AccessRío Portal - Choose Version</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"> -->
+  
+  <style>
+    :root {
+      --rio-gold: #f9c900;
+      --rio-dark-gray: #414042;
+      --rio-med-blue: #2A96C6;
+      --rio-green: #33A961;
+      --text: #ffffff;
+      
+      --rio-green-rgb: 51, 169, 97;
+      --rio-med-blue-rgb: 42, 150, 198;
+    }
+
+    body { 
+      /* font-family: 'Lato', system-ui, sans-serif; */
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, 
+                   Roboto, "Helvetica Neue", Arial, sans-serif; 
+    }
+
+    .overlay-green { background: rgba(var(--rio-green-rgb), 0.90); }
+    .overlay-blue  { background: rgba(var(--rio-med-blue-rgb), 0.90); }
+    
+    .hover-green:hover { background: rgba(var(--rio-green-rgb), 0.75); }
+    .hover-blue:hover  { background: rgba(var(--rio-med-blue-rgb), 0.75); }
+
+    .badge {
+      display: inline-block;
+      background-color: #1a1a1a;
+      color: white;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 10px 32px;
+      border-radius: 9999px;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.4);
+    }
+
+    .title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: 2.1rem;
+      font-weight: 300;
+    }
+
+    @media (min-width: 768px) {
+      .title { font-size: 4rem; }
+      .subtitle { font-size: 2.6rem; }
+    }
+
+    @media (min-width: 1024px) {
+      .title { font-size: 4.8rem; }
+      .subtitle { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body class="bg-[var(--rio-dark-gray)] text-white h-screen overflow-hidden">
+
+  <!-- Top Bar -->
+  <div class="h-16 bg-[var(--rio-dark-gray)] border-b border-gray-700 fixed w-full z-50 flex items-center justify-center">
+    <img src="https://www.riohondo.edu/wp-content/uploads/2023/08/AccessRIO.png" 
+         alt="AccessRío" 
+         class="h-10">
+  </div>
+
+  <!-- Main Content -->
+  <div class="h-screen flex flex-col lg:flex-row pt-16">
+
+    <!-- LEFT: CURRENT -->
+    <a href="https://accessrio.riohondo.edu"
+       class="group flex-1 relative flex items-center justify-center overflow-hidden">
+      
+      <img src="https://page.riohondo.edu/wp-content/uploads/2026/05/current-accessrio.webp"
+           class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+      
+      <div class="overlay-green absolute inset-0 hover-green transition-all duration-300"></div>
+      
+      <div class="relative z-10 text-center px-6">
+        <span class="badge">VISIT</span>
+        <h1 class="title mt-6">CURRENT</h1>
+        <h2 class="subtitle mt-2">AccessRío Portal</h2>
+      </div>
+    </a>
+
+    <!-- RIGHT: COMING SOON -->
+    <a href="https://experience-test.elluciancloud.com/rhctest/" 
+       class="group flex-1 relative flex items-center justify-center overflow-hidden">
+      
+      <img src="https://page.riohondo.edu/wp-content/uploads/2026/05/upcoming-accessrio-noid-nosurvey.webp"
+           class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+      
+      <div class="overlay-blue absolute inset-0 hover-blue transition-all duration-300"></div>
+      
+      <div class="relative z-10 text-center px-6">
+        <span class="badge">PREVIEW</span>
+        <h1 class="title mt-6">COMING SOON</h1>
+        <h2 class="subtitle mt-2">AccessRío Portal</h2>
+      </div>
+    </a>
+
+  </div>
+
+</body>
+</html>

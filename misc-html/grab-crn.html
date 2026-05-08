@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Number Extractor & Sorter</title>
+<style>
+  body {font-family: Arial, sans-serif; margin: 2rem;}
+  textarea {width: 100%; height: 150px; font-family: monospace;}
+  #output {margin-top: 1rem; padding: .5rem; background:#f0f0f0; word-break: break-all;}
+  button {padding: .5rem 1rem; font-size: 1rem; margin-right: .5rem;}
+  #copyBtn {display:none;}
+</style>
+</head>
+<body>
+
+<h2>Extract numbers, deduplicate & sort</h2>
+
+<label for="src">Paste your text here:</label><br>
+<textarea id="src" placeholder="e.g. Intro to Music Tech - 39088&#10;..."></textarea><br>
+
+<button id="commaBtn">Separate numbers with comma</button>
+<button id="quoteBtn">Separate numbers with comma and single‑quotes</button>
+<button id="copyBtn">Copy result</button>
+
+<h3>Result</h3>
+<div id="output"></div>
+
+<script>
+/* 
+Q: please explain this function, the regex, and the sorting logic in detail.
+A: The function `getSortedNumbers` takes a string input `text` and performs the following steps:
+1. **Extracting Numbers**: It uses the regular expression `\d+` to find all sequences of digits in the input text. The `g` flag means it will find all matches, not just the first one. The `match` method returns an array of all matched substrings (which are the numbers as strings). If there are no matches, it returns `null`, so we use `|| []` to ensure we get an empty array instead.    
+2. **Deduplication**: The `map(Number)` converts the array of string numbers into an array of actual numbers. Then, we create a `Set` from this array to remove duplicates, since a `Set` can only contain unique values. We then convert the `Set` back into an array using the spread operator `...`.
+3. **Sorting**: The `sort` method is called on the array of unique numbers  
+with a comparison function `(a, b) => a - b`. This function tells `sort` to order the numbers in ascending order. If `a` is less than `b`, it returns a negative value, which means `a` should come before `b`. If `a` is greater than `b`, it returns a positive value, meaning `b` should come before `a`. If they are equal, it returns 0, meaning their order doesn't change.   
+4. **Return**: Finally, the function returns the sorted array of unique numbers.
+*/
+// ---------- shared helper ---------- 
+function getSortedNumbers(text) {
+  const matches = text.match(/\d+/g) || [];
+  const unique = [...new Set(matches)];
+  unique.sort((a, b) => Number(a) - Number(b));
+  return unique;
+}
+
+
+/* ---------- process buttons ---------- */
+document.getElementById('commaBtn').addEventListener('click', () => {
+  const numbers = getSortedNumbers(document.getElementById('src').value);
+  const result = numbers.join(',');
+  showResult(result);
+});
+
+document.getElementById('quoteBtn').addEventListener('click', () => {
+  const numbers = getSortedNumbers(document.getElementById('src').value);
+  const quoted = numbers.map(n => `'${n}'`);
+  const result = quoted.join(',');
+  showResult(result);
+});
+
+/* ---------- display & copy ---------- */
+function showResult(text) {
+  const out = document.getElementById('output');
+  out.textContent = text;
+  // make copy button visible
+  document.getElementById('copyBtn').style.display = 'inline-block';
+}
+
+/* copy to clipboard */
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const text = document.getElementById('output').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Result copied to clipboard!');
+  }).catch(err => {
+    console.error('Copy failed', err);
+    alert('Unable to copy. Please try manually.');
+  });
+});
+</script>
+
+</body>
+</html>
