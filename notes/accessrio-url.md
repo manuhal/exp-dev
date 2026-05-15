@@ -1,7 +1,10 @@
 # Experience AccessRio URL
 
+
 ## TEST:
-https://experience-test.elluciancloud.com/rhctest
+- Stream ID: 13982593273
+- Measurement Id: G-YPZS0FW8F2
+- https://experience-test.elluciancloud.com/rhctest
 
 ### url for email:
 https://experience-test.elluciancloud.com/rhctest?utm_source=weekly_email&utm_medium=email&utm_campaign=new_accessrio_promo
