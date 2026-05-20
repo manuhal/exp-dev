@@ -9,8 +9,8 @@ $url1 = "https://manuhal.github.io/exp-dev/pages/accessrio.html";
 $url2 = "https://manuhal.github.io/exp-dev/pages/accessrio-june1.html";
 
 // Uses server time. After this timestamp, the iframe loads url2.
-$switchAt = new DateTime("2026-05-20 16:00:00"); // TEST: May 20th, 2026 at 4pm PST
-// $switchAt = new DateTime("2026-06-01 00:00:00"); // REAL: June 1st, 2026 at midnight PST
+// $switchAt = new DateTime("2026-05-20 16:00:00"); // TEST: May 20th, 2026 at 4pm PST
+$switchAt = new DateTime("2026-06-01 00:00:00"); // REAL: June 1st, 2026 at midnight PST
 $now = new DateTime();
 
 // Determine which URL to use based on server time
