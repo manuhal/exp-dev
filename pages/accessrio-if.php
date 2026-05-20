@@ -1,6 +1,5 @@
 <?php
-// AccessRío Portal - Dynamic iframe loader using server-side timing
-// Uses server time to determine which content to display
+// AccessRío Portal - Dynamic iframe loader
 
 // Set timezone to Los Angeles (Pacific Time)
 date_default_timezone_set('America/Los_Angeles');
