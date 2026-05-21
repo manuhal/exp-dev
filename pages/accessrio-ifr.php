@@ -10,11 +10,14 @@ header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
 // Set timezone to Los Angeles (Pacific Time)
 date_default_timezone_set('America/Los_Angeles');
 
-$url1 = "https://manuhal.github.io/exp-dev/pages/accessrio.html";
-$url2 = "https://manuhal.github.io/exp-dev/pages/accessrio-june1.html";
+// $url1 = "https://manuhal.github.io/exp-dev/pages/accessrio.html";
+// $url2 = "https://manuhal.github.io/exp-dev/pages/accessrio-june1.html";
+
+$url1 = "https://page.riohondo.edu/ar/accessrio-preview.html";
+$url2 = "https://page.riohondo.edu/ar/accessrio-new.html";
 
 // Uses server time. After this timestamp, the iframe loads url2.
-// $switchAt = new DateTime("2026-05-20 16:00:00"); // TEST: May 20th, 2026 at 4pm PST
+// $switchAt = new DateTime("2026-05-21 13:20:00"); // TEST
 $switchAt = new DateTime("2026-06-01 00:00:00"); // REAL: June 1st, 2026 at midnight PST
 $now = new DateTime();
 
@@ -56,14 +59,13 @@ $switchTimeMs = $switchAt->getTimestamp() * 1000;
 	<iframe id="content-frame" title="AccessRío Portal" src="<?php echo htmlspecialchars($selectedUrl, ENT_QUOTES, 'UTF-8'); ?>"></iframe>
 
 	<script>
-		// Pick iframe source at runtime so switch still works even if this page is cached.
 		const switchTimeMs = <?php echo $switchTimeMs; ?>;
-		const urlBeforeSwitch = <?php echo json_encode($url1); ?>;
-		const urlAfterSwitch = <?php echo json_encode($url2); ?>;
+		const eUrl1 = <?php echo json_encode(base64_encode($url1)); ?>;
+		const eUrl2 = <?php echo json_encode(base64_encode($url2)); ?>;
 		const contentFrame = document.getElementById('content-frame');
 
 		function applyFrameSource() {
-			const targetUrl = Date.now() < switchTimeMs ? urlBeforeSwitch : urlAfterSwitch;
+			const targetUrl = Date.now() < switchTimeMs ? atob(eUrl1) : atob(eUrl2);
 			if (contentFrame && contentFrame.src !== targetUrl) {
 				contentFrame.src = targetUrl;
 			}
