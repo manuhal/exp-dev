@@ -1,6 +1,12 @@
 <?php
 // AccessRío Portal - Dynamic iframe loader
 
+// Prevent caching for this page at browser/proxy/CDN layers.
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
+header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
+
 // Set timezone to Los Angeles (Pacific Time)
 date_default_timezone_set('America/Los_Angeles');
 
@@ -23,6 +29,9 @@ $switchTimeMs = $switchAt->getTimestamp() * 1000;
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
 	<title>AccessRío Portal</title>
 	<style>
 		html,
@@ -44,24 +53,31 @@ $switchTimeMs = $switchAt->getTimestamp() * 1000;
 	</style>
 </head>
 <body>
-	<iframe id="content-frame" title="AccessRío Portal" src="<?php echo htmlspecialchars($selectedUrl); ?>"></iframe>
+	<iframe id="content-frame" title="AccessRío Portal" src="<?php echo htmlspecialchars($selectedUrl, ENT_QUOTES, 'UTF-8'); ?>"></iframe>
 
 	<script>
-		// Periodically check switch time to avoid long setTimeout limits (~24.8 days max delay).
+		// Pick iframe source at runtime so switch still works even if this page is cached.
 		const switchTimeMs = <?php echo $switchTimeMs; ?>;
-		const nowMs = Date.now();
+		const urlBeforeSwitch = <?php echo json_encode($url1); ?>;
+		const urlAfterSwitch = <?php echo json_encode($url2); ?>;
+		const contentFrame = document.getElementById('content-frame');
 
-		if (nowMs >= switchTimeMs) {
-			location.reload();
-		} else {
-			const checkIntervalMs = 60 * 1000;
-			const intervalId = setInterval(() => {
-				if (Date.now() >= switchTimeMs) {
-					clearInterval(intervalId);
-					location.reload();
-				}
-			}, checkIntervalMs);
+		function applyFrameSource() {
+			const targetUrl = Date.now() < switchTimeMs ? urlBeforeSwitch : urlAfterSwitch;
+			if (contentFrame && contentFrame.src !== targetUrl) {
+				contentFrame.src = targetUrl;
+			}
 		}
+
+		applyFrameSource();
+
+		const checkIntervalMs = 60 * 1000;
+		const intervalId = setInterval(() => {
+			applyFrameSource();
+			if (Date.now() >= switchTimeMs) {
+				clearInterval(intervalId);
+			}
+		}, checkIntervalMs);
 	</script>
 </body>
 </html>

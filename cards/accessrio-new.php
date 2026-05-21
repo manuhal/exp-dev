@@ -1,6 +1,12 @@
 <?php
 // AccessRío Portal - Dynamic iframe loader
 
+// Prevent caching for this page at browser/proxy/CDN layers.
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
+header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
+
 // Set timezone to Los Angeles (Pacific Time)
 date_default_timezone_set('America/Los_Angeles');
 
@@ -27,6 +33,9 @@ $isBeforeSwitch = $now < $switchAt;
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
 	<title>AccessRío</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://rio-hondo-college-public.github.io/static/css/rhc-main.css">
