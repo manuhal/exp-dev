@@ -15,8 +15,11 @@ $now = new DateTime();
 // Determine which URL to use based on server time
 $selectedUrl = ($now < $switchAt) ? $url1 : $url2;
 
-// Convert to milliseconds for JavaScript countdown
+// Convert to milliseconds for JavaScript checks
 $switchTimeMs = $switchAt->getTimestamp() * 1000;
+
+// Track current state at render time
+$isBeforeSwitch = $now < $switchAt;
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
@@ -106,38 +109,51 @@ $switchTimeMs = $switchAt->getTimestamp() * 1000;
 
 <body>
 	<main>
-		<a href="https://experience-test.elluciancloud.com/rhctest?utm_source=luminis_portal&utm_medium=portal&utm_campaign=new_accessrio_promo"
+		<a id="portal-link" href="<?php echo htmlspecialchars($selectedUrl, ENT_QUOTES, 'UTF-8'); ?>"
 			target="_blank" rel="noopener noreferrer" class="hero text-center" title="Preview the new AccessRío Portal">
 			<div class="container">
 				<img src="https://www.riohondo.edu/wp-content/uploads/2023/08/AccessRIO.png" alt="AccessRío Logo"
 					style="margin-bottom: 0.5rem;">
-				<p id="main-text" class="py-0 my-0">Preview the new AccessRío (Test) Portal</p>
+				<p id="main-text" class="py-0 my-0"><?php echo $isBeforeSwitch ? 'Preview the new AccessRío (Test) Portal' : 'Visit the new AccessRío Portal'; ?></p>
+				<?php if ($isBeforeSwitch): ?>
 				<p id="sub-text" style="font-size: 0.9rem;"><span style="font-weight: bold;">Note: </span>The new
 					AccessRío Portal will go live on Monday,&nbsp;June&nbsp;1,&nbsp;2026.</p>
+				<?php endif; ?>
 
 			</div>
 		</a>
 	</main>
 	<script>
-		// Auto-reload page at switch time (uses server time, not browser time)
+		// Periodically check switch time to avoid long setTimeout limits (~24.8 days max delay).
 		const switchTimeMs = <?php echo $switchTimeMs; ?>;
+		const urlAfterSwitch = <?php echo json_encode($url2); ?>;
 		const nowMs = Date.now();
-		const msUntilSwitch = switchTimeMs - nowMs;
 		const mainText = document.getElementById('main-text');
 		const subText = document.getElementById('sub-text');
+		const portalLink = document.getElementById('portal-link');
 
-		if (msUntilSwitch > 0) {
-			// Page will auto-reload at the switch time
-			setTimeout(() => {
-				// remove subText
-				if (subText) {
-					subText.remove();
+		function applySwitchedState() {
+			if (subText) {
+				subText.remove();
+			}
+			if (mainText) {
+				mainText.textContent = 'Visit the new AccessRío Portal';
+			}
+			if (portalLink) {
+				portalLink.href = urlAfterSwitch;
+			}
+		}
+
+		if (nowMs >= switchTimeMs) {
+			applySwitchedState();
+		} else {
+			const checkIntervalMs = 60 * 1000;
+			const intervalId = setInterval(() => {
+				if (Date.now() >= switchTimeMs) {
+					applySwitchedState();
+					clearInterval(intervalId);
 				}
-				// update mainText to reflect the new AccessRío Portal is live
-				if (mainText) {
-					mainText.textContent = "Visit the new AccessRío Portal";
-				}
-			}, msUntilSwitch);
+			}, checkIntervalMs);
 		}
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -47,16 +47,20 @@ $switchTimeMs = $switchAt->getTimestamp() * 1000;
 	<iframe id="content-frame" title="AccessRío Portal" src="<?php echo htmlspecialchars($selectedUrl); ?>"></iframe>
 
 	<script>
-		// Auto-reload page at switch time (uses server time, not browser time)
+		// Periodically check switch time to avoid long setTimeout limits (~24.8 days max delay).
 		const switchTimeMs = <?php echo $switchTimeMs; ?>;
 		const nowMs = Date.now();
-		const msUntilSwitch = switchTimeMs - nowMs;
 
-		if (msUntilSwitch > 0) {
-			// Page will auto-reload at the switch time
-			setTimeout(() => {
-				location.reload();
-			}, msUntilSwitch);
+		if (nowMs >= switchTimeMs) {
+			location.reload();
+		} else {
+			const checkIntervalMs = 60 * 1000;
+			const intervalId = setInterval(() => {
+				if (Date.now() >= switchTimeMs) {
+					clearInterval(intervalId);
+					location.reload();
+				}
+			}, checkIntervalMs);
 		}
 	</script>
 </body>
