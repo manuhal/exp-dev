@@ -14,8 +14,8 @@ $url1 = "https://experience-test.elluciancloud.com/rhctest/";
 $url2 = "https://experience.elluciancloud.com/rhc/";
 
 // Uses server time. After this timestamp, the iframe loads url2.
-$switchAt = new DateTime("2026-05-21 10:25:00"); // TEST
-// $switchAt = new DateTime("2026-06-01 00:00:00"); // REAL: June 1st, 2026 at midnight PST
+// $switchAt = new DateTime("2026-05-21 10:25:00"); // TEST
+$switchAt = new DateTime("2026-06-01 00:00:00"); // REAL: June 1st, 2026 at midnight PST
 $now = new DateTime();
 
 // Determine which URL to use based on server time
