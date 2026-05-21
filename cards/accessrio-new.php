@@ -133,21 +133,30 @@ $isBeforeSwitch = $now < $switchAt;
 	<script>
 		// Periodically check switch time to avoid long setTimeout limits (~24.8 days max delay).
 		const switchTimeMs = <?php echo $switchTimeMs; ?>;
-		const urlAfterSwitch = <?php echo json_encode($url2); ?>;
+		const eNewUrl = <?php echo json_encode(base64_encode($url2)); ?>;
+		const encNewTxt = <?php echo json_encode(base64_encode('Visit the new AccessRío Portal')); ?>;
 		const nowMs = Date.now();
 		const mainText = document.getElementById('main-text');
 		const subText = document.getElementById('sub-text');
 		const portalLink = document.getElementById('portal-link');
 
+		function proc(value) {
+			const bytes = Uint8Array.from(atob(value), (char) => char.charCodeAt(0));
+			return new TextDecoder().decode(bytes);
+		}
+
 		function applySwitchedState() {
+			const newURL = proc(eNewUrl);
+			const newTxt = proc(encNewTxt);
+
 			if (subText) {
 				subText.remove();
 			}
 			if (mainText) {
-				mainText.textContent = 'Visit the new AccessRío Portal';
+				mainText.textContent = newTxt;
 			}
 			if (portalLink) {
-				portalLink.href = urlAfterSwitch;
+				portalLink.href = newURL;
 			}
 		}
 
