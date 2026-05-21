@@ -8,8 +8,8 @@ header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
 // Set timezone to Los Angeles (Pacific Time)
 date_default_timezone_set('America/Los_Angeles');
 
-$url1 = "https://experience-test.elluciancloud.com/rhctest/";
-$url2 = "https://experience.elluciancloud.com/rhc/";
+$url1 = "https://experience-test.elluciancloud.com/rhctest?utm_source=luminis_portal&utm_medium=portal&utm_campaign=new_accessrio_promo";
+$url2 = "https://experience.elluciancloud.com/rhc?utm_source=luminis_portal&utm_medium=portal&utm_campaign=accessrio_promo";
 
 // Uses server time. After this timestamp, the iframe loads url2.
 // $switchAt = new DateTime("2026-05-21 10:25:00"); // TEST
