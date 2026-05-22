@@ -77,9 +77,9 @@
 					<i class="fas fa-link card-icon" aria-hidden="true"></i>
 
 				</div>
-				<p id="parentUrl" class="small mt-2 mb-0"></p>
-				<p id="theLink" class="small mt-2 mb-0"></p>
-				<p id="notes" class="small mt-2 mb-0"></p>
+				<p class="small mt-2 mb-0"><strong>Parent URL:</strong> <span id="parent-url"></span></p>
+				<p class="small mt-2 mb-0"><strong>Link:</strong> <span id="url-link"></span></p>
+				<p class="small mt-2 mb-0"><strong>Env:</strong> <span id="env"></span> <br> <strong>Method:</strong> <span id="method-url"></span></p>
 			</div>
 		</a>
 	</main>
@@ -87,45 +87,59 @@
 
 	<script>
 		const bannerLink = document.getElementById("banner-link");
-		const parentEl = document.getElementById("parentUrl");
-		const linkEl = document.getElementById("theLink");
-		const notesEl = document.getElementById("notes");
-		let method;
+		const parentUrlEl = document.getElementById("parent-url");
+		const urlLinkEl = document.getElementById("url-link");
+		const envEl = document.getElementById("env");
+		const methodEl = document.getElementById("method-url");
 		const urlProd = "https://prod-ban9-appnav.riohondo.edu:8443/applicationNavigator/seamless";
 		const urlTest = "https://dev-appnav.riohondo.edu:8443/applicationNavigator/seamless";
 
-		function getParentUrl() {
+		function getParentContext() {
 			const referrer = document.referrer;
 			if (referrer) {
-				method = "Referrer";
-				return referrer;
+				return { url: referrer, method: "Referrer" };
 			}
 
 			const params = new URLSearchParams(window.location.search);
 			const parentUrlParam = params.get("parentUrl");
 			if (parentUrlParam) {
-				method = "URL Parameter";
-				return parentUrlParam;
+				return { url: parentUrlParam, method: "URL Parameter" };
 			}
-			method = "Fallback, Current URL (window.location.href)";
-			return window.location.href;
+			return {
+				url: window.location.href,
+				method: "Fallback, Current URL (window.location.href)",
+			};
 		}
 		
 		// Prod Exp: https://experience.elluciancloud.com/rhc/
 		// Test Exp: https://experience-test.elluciancloud.com/rhctest/
 
-		const finalParentUrl = getParentUrl();
-		const env = (() => {
-			const value = String(finalParentUrl || "").toLowerCase();
-			if (value.includes("experience-test.elluciancloud.com")) return "Test";
-			if (value.includes("experience.elluciancloud.com")) return "Prod";
-			return "Unknown";
-		})();
-		const finalUrl = env === "Test" ? urlTest : env === "Prod" ? urlProd : "#";
-		parentEl.innerHTML = `<b>Parent URL:</b> ${finalParentUrl}`;
-		notesEl.innerHTML = `<b>Environment:</b> ${env}<br><b>Method:</b> ${method}`;
-		linkEl.innerHTML = `<b>Link:</b> ${finalUrl}`;
-		bannerLink.href = finalUrl;
+		function getEnv(parentUrl) {
+			try {
+				const host = new URL(parentUrl).hostname.toLowerCase();
+				if (host === "experience-test.elluciancloud.com") return "Test";
+				if (host === "experience.elluciancloud.com") return "Prod";
+				return "Unknown";
+			} catch {
+				return "Unknown";
+			}
+		}
+
+		const { url: finalParentUrl, method } = getParentContext();
+		const env = getEnv(finalParentUrl);
+		const finalLinkUrl = env === "Test" ? urlTest : env === "Prod" ? urlProd : "";
+		
+		parentUrlEl.textContent = finalParentUrl;
+		urlLinkEl.textContent = finalLinkUrl || "Unavailable";
+		envEl.textContent = env;
+		methodEl.textContent = method;
+
+		if (finalLinkUrl) {
+			bannerLink.href = finalLinkUrl;
+		} else {
+			bannerLink.removeAttribute("href");
+			bannerLink.setAttribute("aria-disabled", "true");
+		}
 	</script>
 
 </body>
