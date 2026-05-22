@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iframe Parent Access Notes</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0f172a;
+            --panel: #111827;
+            --panel-border: #243042;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --accent: #60a5fa;
+            --code-bg: #0b1220;
+            --code-border: #263244;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(180deg, #0b1120 0%, var(--bg) 100%);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        main {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 32px 20px 56px;
+        }
+
+        .card {
+            background: rgba(17, 24, 39, 0.92);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 1.8rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            margin: 28px 0 12px;
+            font-size: 1.15rem;
+            color: #f3f4f6;
+        }
+
+        p {
+            margin: 0 0 14px;
+        }
+
+        ul,
+        ol {
+            margin: 0 0 16px 1.25rem;
+            padding: 0;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .callout {
+            border-left: 4px solid var(--accent);
+            background: rgba(96, 165, 250, 0.08);
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin: 16px 0;
+        }
+
+        .note {
+            color: var(--muted);
+        }
+
+        .summary {
+            background: rgba(96, 165, 250, 0.12);
+            border: 1px solid rgba(96, 165, 250, 0.25);
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin: 18px 0 8px;
+        }
+
+        .summary strong {
+            color: #eff6ff;
+        }
+
+        .label {
+            display: inline-block;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #93c5fd;
+            margin-bottom: 8px;
+        }
+
+        pre {
+            margin: 12px 0 18px;
+            padding: 16px;
+            overflow: auto;
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 12px;
+        }
+
+        code {
+            font-family: Consolas, Monaco, 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        pre code {
+            color: #dbeafe;
+            white-space: pre;
+        }
+
+        .section {
+            margin-top: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <article class="card">
+            <header>
+                <span class="label">Notes</span>
+                <h1>Iframe Parent Access Notes</h1>
+                <p class="note">This page is a short reference for the iframe and parent-page question.</p>
+            </header>
+
+            <div class="summary">
+                <p><strong>Plain answer:</strong> if the parent page is on a different domain, your iframe can see the parent URL string, but it cannot reach into the parent page and hide or change elements there.</p>
+                <p class="note">So: reading the URL is allowed. Changing the parent DOM is not.</p>
+            </div>
+
+            <section class="section">
+                <h2>1. Same Origin</h2>
+                <p>If the iframe and the parent page share the same origin, direct DOM access works. In that case, the iframe can look up the parent element and hide it.</p>
+                <pre><code>var calendarBtn = window.parent.document.getElementById("calendar-btn");
+if (calendarBtn) {
+    calendarBtn.style.display = "none";
+}</code></pre>
+                <p class="note">This only applies when both pages have the same protocol, host, and port.</p>
+            </section>
+
+            <section class="section">
+                <h2>2. Cross Origin</h2>
+                <p>If the parent is on a different domain, direct DOM access is blocked by the browser's Same-Origin Policy. That is why a cross-origin iframe cannot hide <code>#calendar-btn</code> in the Experience shell.</p>
+                <div class="callout">
+                    <p><strong>Your case:</strong> the parent is <code>experience.elluciancloud.com</code> or <code>experience-test.elluciancloud.com</code>.</p>
+                    <p class="note">That means the iframe can still read the referrer URL, but it cannot reach into the parent page and change elements there.</p>
+                </div>
+                <p>If messaging is supported, the iframe can send a request and the parent page can decide whether to act on it.</p>
+                <pre><code>window.parent.postMessage({ action: "hide", id: "calendar-btn" }, "*");</code></pre>
+                <p class="note">This only helps if the parent shell already listens for that message. If it does not, nothing happens.</p>
+            </section>
+
+            <section class="section">
+                <h2>Practical Options</h2>
+                <ol>
+                    <li>If <code>#calendar-btn</code> is inside your iframe, hide it directly with JavaScript.</li>
+                    <li>If <code>#calendar-btn</code> is in the Experience shell, you cannot hide it from the iframe.</li>
+                    <li>Ask Ellucian whether the platform supports a card API, shell hook, or supported message listener.</li>
+                    <li>Use parent-side CSS or configuration only if you control the shell itself.</li>
+                </ol>
+            </section>
+
+            <section class="section">
+                <h2>Bottom Line</h2>
+                <p>Cross-origin iframe access is intentionally restricted by all modern browsers. The browser lets you observe some context, like the referrer URL, but it will not let your iframe directly manipulate the parent DOM.</p>
+                <p class="note">That restriction is the security boundary that keeps a card from tampering with the host page.</p>
+            </section>
+        </article>
+    </main>
+
+</body>
+
+</html>
