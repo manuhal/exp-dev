@@ -41,6 +41,11 @@
 		.hero:hover p {
 			color: #ffffff;
 		}
+		.output {
+			max-width: 400px;
+			margin: 0 auto;
+			text-align: left;
+		}
 
 		.hero p {
 			margin: 1rem auto;
@@ -75,11 +80,13 @@
 			<div class="container">
 				<div class="icon-circle">
 					<i class="fas fa-link card-icon" aria-hidden="true"></i>
-
 				</div>
-				<p class="small mt-2 mb-0"><strong>Parent URL:</strong> <span id="parent-url"></span></p>
-				<p class="small mt-2 mb-0"><strong>Link:</strong> <span id="url-link"></span></p>
-				<p class="small mt-2 mb-0"><strong>Env:</strong> <span id="env"></span> <br> <strong>Method:</strong> <span id="method-url"></span></p>
+				<div class="output">
+					<p class="small mt-2 mb-0"><strong>Parent URL:</strong> <span id="parent-url"></span></p>
+					<p class="small mt-2 mb-0"><strong>Link:</strong> <span id="url-link"></span></p>
+					<p class="small mt-2 mb-0"><strong>Env:</strong> <span id="env"></span></p>
+					<p class="small mt-2 mb-0"><strong>Method:</strong> <span id="method-url"></span></p>
+				</div>
 			</div>
 		</a>
 	</main>
@@ -110,7 +117,7 @@
 				method: "Fallback, Current URL (window.location.href)",
 			};
 		}
-		
+
 		// Prod Exp: https://experience.elluciancloud.com/rhc/
 		// Test Exp: https://experience-test.elluciancloud.com/rhctest/
 
@@ -128,7 +135,7 @@
 		const { url: finalParentUrl, method } = getParentContext();
 		const env = getEnv(finalParentUrl);
 		const finalLinkUrl = env === "Test" ? urlTest : env === "Prod" ? urlProd : "";
-		
+
 		parentUrlEl.textContent = finalParentUrl;
 		urlLinkEl.textContent = finalLinkUrl || "Unavailable";
 		envEl.textContent = env;
