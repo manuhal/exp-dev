@@ -110,16 +110,20 @@
 			method = "Fallback, Current URL (window.location.href)";
 			return window.location.href;
 		}
-
-		function isProd(parentUrl) {
-			const value = String(parentUrl || "").toLowerCase();
-			return value.includes("experience.elluciancloud.com") || value.includes("prod-ban9-appnav.riohondo.edu");
-		}
+		
+		// Prod Exp: https://experience.elluciancloud.com/rhc/
+		// Test Exp: https://experience-test.elluciancloud.com/rhctest/
 
 		const finalParentUrl = getParentUrl();
-		const finalUrl = isProd(finalParentUrl) ? urlProd : urlTest;
+		const env = (() => {
+			const value = String(finalParentUrl || "").toLowerCase();
+			if (value.includes("experience-test.elluciancloud.com")) return "Test";
+			if (value.includes("experience.elluciancloud.com")) return "Prod";
+			return "Unknown";
+		})();
+		const finalUrl = env === "Test" ? urlTest : env === "Prod" ? urlProd : "#";
 		parentEl.innerHTML = `<b>Parent URL:</b> ${finalParentUrl}`;
-		notesEl.innerHTML = `<b>Method:</b> ${method}`;
+		notesEl.innerHTML = `<b>Environment:</b> ${env}<br><b>Method:</b> ${method}`;
 		linkEl.innerHTML = `<b>Link:</b> ${finalUrl}`;
 		bannerLink.href = finalUrl;
 	</script>
