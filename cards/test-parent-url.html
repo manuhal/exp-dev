@@ -78,7 +78,7 @@
 
 <body>
 	<main>
-		<a id="banner-link" href="#" target="_blank" rel="noopener noreferrer" class="hero text-center"
+		<a id="banner-link" href="https://prod-ban9-appnav.riohondo.edu:8443/applicationNavigator/seamless" target="_blank" rel="noopener noreferrer" class="hero text-center"
 			title="Login to Banner">
 			<div class="container">
 				<div class="icon-circle">
@@ -95,14 +95,17 @@
 	</main>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+
 	<script>
-		const bannerLink = document.getElementById("banner-link");
+	function urlSwitch(elementId, urlTest) {
+		const bannerLink = document.getElementById(elementId);
+		if (!bannerLink) return;
+
 		const parentUrlEl = document.getElementById("parent-url");
 		const urlLinkEl = document.getElementById("url-link");
 		const envEl = document.getElementById("env");
 		const methodEl = document.getElementById("method-url");
-		const urlProd = "https://prod-ban9-appnav.riohondo.edu:8443/applicationNavigator/seamless";
-		const urlTest = "https://dev-appnav.riohondo.edu:8443/applicationNavigator/seamless";
+		const urlProd = bannerLink.getAttribute("href") || "";
 
 		function getParentContext() {
 			const referrer = document.referrer;
@@ -121,9 +124,6 @@
 			};
 		}
 
-		// Prod Exp: https://experience.elluciancloud.com/rhc/
-		// Test Exp: https://experience-test.elluciancloud.com/rhctest/
-
 		function getEnv(parentUrl) {
 			try {
 				const host = new URL(parentUrl).hostname.toLowerCase();
@@ -137,19 +137,23 @@
 
 		const { url: finalParentUrl, method } = getParentContext();
 		const env = getEnv(finalParentUrl);
-		const finalLinkUrl = env === "Test" ? urlTest : env === "Prod" ? urlProd : "";
 
-		parentUrlEl.textContent = finalParentUrl;
-		urlLinkEl.textContent = finalLinkUrl || "Unavailable";
-		envEl.textContent = env;
-		methodEl.textContent = method;
-
-		if (finalLinkUrl) {
-			bannerLink.href = finalLinkUrl;
+		// Only override the link if Test environment
+		if (env === "Test") {
+			bannerLink.href = urlTest;
+			if (urlLinkEl) urlLinkEl.textContent = urlTest;
 		} else {
-			bannerLink.removeAttribute("href");
-			bannerLink.setAttribute("aria-disabled", "true");
+			// Leave the href as set in HTML (urlProd)
+			if (urlLinkEl) urlLinkEl.textContent = bannerLink.href || urlProd;
 		}
+
+		if (parentUrlEl) parentUrlEl.textContent = finalParentUrl;
+		if (envEl) envEl.textContent = env;
+		if (methodEl) methodEl.textContent = method;
+	}
+
+	// Call the function for this page
+	urlSwitch("banner-link", "https://dev-appnav.riohondo.edu:8443/applicationNavigator/seamless");
 	</script>
 
 </body>
