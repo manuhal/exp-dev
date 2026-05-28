@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grades</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://rio-hondo-college-public.github.io/static/css/rhc-main.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .hero {
+            min-height: 100vh;
+            background-color: var(--rio-dark-blue);
+            position: relative;
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .hero:hover {
+            background-color: #2B7187;
+            /* fallback */
+            background-color: color-mix(in srgb, var(--rio-dark-blue) 80%, var(--rio-green) 20%);
+        }
+
+        .hero:hover .icon-circle {
+            transform: scale(1.08);
+            box-shadow: 0 8px 24px rgba(255, 215, 0, 0.2);
+        }
+
+        .hero:hover p {
+            color: #ffffff;
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin: 1.5rem auto;
+            transition: color 0.3s ease;
+        }
+
+        .icon-circle {
+            width: 85px;
+            height: 85px;
+            background-color: var(--rio-gold, #FFD700);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .icon-circle i {
+            font-size: 3rem;
+            color: var(--rio-dark-gray, #333);
+
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <a id="banner-link" href="https://prod-ssb9-student.riohondo.edu:8443/StudentSelfService/ssb/studentGrades/" target="_blank"
+            rel="noopener noreferrer" class="hero text-center" title="View My Grades by Term">
+            <div class="container">
+                <div class="icon-circle">
+                    <i class="fas fa-trophy card-icon" aria-hidden="true"></i>
+                </div>
+                <h1 class="h2 mb-0">View My Grades</h1>
+            </div>
+        </a>
+    </main>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../static/js/rhc-main.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                if (typeof urlSwitch === "function") {
+                    urlSwitch("banner-link", "https://dev-ssb9-student.riohondo.edu:8443/StudentSelfService/ssb/studentGrades/");
+                }
+            });
+        </script>
+</body>
+
+</html>
