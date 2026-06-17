@@ -7,6 +7,8 @@ This page folder is for local testing.
 - `origin`: https://github.com/mhalim_rhc/experience-dev (private)
 - `public-origin`: https://github.com/manuhal/exp-dev
 
+---
+
 ## Quick Publish Workflow
 
 Use this when you want coworkers to preview updates.
@@ -15,9 +17,15 @@ Use this when you want coworkers to preview updates.
 git push public-origin
 ```
 
+Then they can view them here, for example:
+- https://manuhal.github.io/exp-dev/pages/accessrio-pickpage/accessrio.html
+- https://manuhal.github.io/exp-dev/pages/accessrio-pickpage/accessrio-alt1.html
+
 Alternative manual location (upload the pages there):
 
 - https://page.riohondo.edu/ar/
+
+---
 
 ## Git Remote Cheat Sheet
 
