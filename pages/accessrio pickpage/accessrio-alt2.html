@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AccessRío Portal - Redirecting</title>
+
+	<!-- Google Tag Manager -->
+	<script>(function (w, d, s, l, i) {
+			w[l] = w[l] || []; w[l].push({
+				'gtm.start':
+					new Date().getTime(), event: 'gtm.js'
+			}); var f = d.getElementsByTagName(s)[0],
+				j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+					'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+		})(window, document, 'script', 'dataLayer', 'GTM-K4H4CS9S');</script>
+	<!-- End Google Tag Manager -->
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700;900&display=swap"
+		rel="stylesheet">
+
+	<style>
+		:root {
+			--rio-gold: #f9c900;
+			--rio-dark-gray: #414042;
+			--rio-med-blue: #2A96C6;
+			--rio-green: #33A961;
+			--text: #ffffff;
+			--rio-green-rgb: 51, 169, 97;
+			--topbar-height: 10vh;
+		}
+
+		body {
+			font-family: "Source Sans 3", "Segoe UI", system-ui, -apple-system,
+				BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+			background: var(--rio-dark-gray);
+			color: var(--text);
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+
+		.skip-link {
+			position: absolute;
+			left: 1rem;
+			top: -3rem;
+			z-index: 2000;
+			background: #ffffff;
+			color: #000000;
+			padding: 0.5rem 0.75rem;
+			border-radius: 0.25rem;
+			text-decoration: none;
+			font-weight: 600;
+		}
+
+		.skip-link:focus {
+			top: 0.75rem;
+		}
+
+		.top-bar {
+			height: var(--topbar-height);
+			background: var(--rio-dark-gray);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+			z-index: 1030;
+			flex-shrink: 0;
+		}
+
+		#main-content {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			min-height: 0;
+		}
+
+		.top-note {
+			flex-shrink: 0;
+			padding: 0.9rem 1.25rem;
+			text-align: center;
+			background: var(--rio-dark-gray);
+		}
+
+		.top-note p {
+			margin: 0;
+			font-size: 0.98rem;
+			line-height: 1.35;
+			color: rgba(255, 255, 255, 0.92);
+		}
+
+		.old-link {
+			color: #ffffff;
+			text-decoration: underline;
+			font-weight: 600;
+		}
+
+		.old-link:hover {
+			color: #ffffff;
+			opacity: 0.85;
+		}
+
+		.countdown {
+			font-weight: 700;
+			color: var(--rio-gold);
+		}
+
+		.main-panels {
+			flex: 1;
+			display: flex;
+			min-height: 0;
+		}
+
+		.main-panels .col-12 {
+			display: flex;
+			flex: 1;
+			min-height: 0;
+		}
+
+		.portal-panel {
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			overflow: hidden;
+			flex: 1;
+			padding: 1.25rem 0;
+			text-decoration: none;
+			color: var(--text);
+			min-height: 0;
+		}
+
+		.portal-panel:focus-visible {
+			outline: 4px solid var(--rio-gold);
+			outline-offset: -4px;
+		}
+
+		.panel-image {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transform: scale(1);
+			transition: transform 0.7s ease;
+		}
+
+		.portal-panel:hover .panel-image {
+			transform: scale(1.05);
+		}
+
+		.panel-overlay {
+			position: absolute;
+			inset: 0;
+			transition: background-color 0.3s ease;
+		}
+
+		.overlay-green {
+			background: rgba(var(--rio-green-rgb), 0.9);
+		}
+
+		.portal-panel:hover .overlay-green {
+			background: rgba(var(--rio-green-rgb), 0.85);
+		}
+
+		.panel-content {
+			position: relative;
+			z-index: 2;
+			padding: 1.5rem;
+		}
+
+		.panel-badge {
+			display: inline-block;
+			background-color: #1a1a1a;
+			color: #fff;
+			font-size: 1.05rem;
+			font-weight: 700;
+			letter-spacing: 3px;
+			text-transform: uppercase;
+			padding: 6px 24px;
+			border-radius: 9999px;
+			box-shadow: 0 10px 15px -3px rgb(0 0 0 / 40%);
+		}
+
+		.panel-title {
+			font-size: 3rem;
+			font-weight: 900;
+			letter-spacing: -0.04em;
+			line-height: 1.1;
+			margin-top: 1.5rem;
+			margin-bottom: 0;
+			text-transform: uppercase;
+			text-shadow: 0 4px 12px rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.35);
+		}
+
+		.panel-subtitle {
+			font-size: 2rem;
+			font-weight: 300;
+			margin-top: 0.5rem;
+			margin-bottom: 0;
+			text-shadow: 0 3px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
+		}
+
+		@media (min-width: 768px) {
+			.top-note p {
+				font-size: 1.05rem;
+			}
+
+			.panel-title {
+				font-size: 4rem;
+			}
+
+			.panel-subtitle {
+				font-size: 2.3rem;
+			}
+		}
+
+		@media (min-width: 992px) {
+			.panel-badge {
+				padding: 10px 32px;
+			}
+
+			.panel-title {
+				font-size: 4.8rem;
+			}
+
+			.panel-subtitle {
+				font-size: 2.5rem;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+
+			.panel-image,
+			.panel-overlay {
+				transition: none;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4H4CS9S" title="Google Tag Manager" height="0"
+			width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<header class="top-bar d-flex align-items-center justify-content-center">
+		<img src="https://www.riohondo.edu/wp-content/uploads/2023/08/AccessRIO.png" alt="AccessRío" style="height: 40px;">
+	</header>
+
+	<main id="main-content" class="container-fluid p-0" tabindex="-1">
+		<h1 class="visually-hidden">AccessRío Portal redirect page</h1>
+		<section class="top-note" aria-live="polite">
+			<p>You will be redirected in <span id="countdown" class="countdown">10</span> seconds to the new AccessRío. If you need to access the old AccessRío, please <a href="https://accessrio.riohondo.edu" class="old-link">visit here</a>.</p>
+		</section>
+		<div class="row g-0 main-panels">
+			<div class="col-12">
+				<a href="https://experience.elluciancloud.com/rhc?utm_source=pickpage&utm_medium=website&utm_campaign=new_accessrio_promo"
+					class="portal-panel left">
+					<img src="https://page.riohondo.edu/wp-content/uploads/2026/05/upcoming-accessrio-noid-nosurvey.webp" alt=""
+						class="panel-image">
+					<div class="panel-overlay overlay-green"></div>
+					<div class="panel-content">
+						<span class="panel-badge">Visit Now</span>
+						<h2 class="panel-title">AccessRío<span class="visually-hidden"> Portal</span></h2>
+						<p class="panel-subtitle">Welcome to Your New Portal</p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</main>
+
+	<script>
+		(function () {
+			const redirectSeconds = 5;
+			const tickMs = 1000;
+			let remainingSeconds = redirectSeconds;
+			const countdown = document.getElementById('countdown');
+			const destination = 'https://experience.elluciancloud.com/rhc?utm_source=pickpage&utm_medium=website&utm_campaign=new_accessrio_promo';
+
+			if (countdown) {
+				countdown.textContent = String(redirectSeconds);
+			}
+
+			const timer = window.setInterval(function () {
+				remainingSeconds -= 1;
+				if (countdown && remainingSeconds >= 0) {
+					countdown.textContent = String(remainingSeconds);
+				}
+				if (remainingSeconds <= 0) {
+					window.clearInterval(timer);
+					window.location.href = destination;
+				}
+			}, tickMs);
+		})();
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
