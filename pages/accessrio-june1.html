@@ -82,7 +82,9 @@
 			justify-content: center;
 			text-align: center;
 			overflow: hidden;
-			height: calc((100dvh - var(--topbar-height)) / 2);
+			/* min-height instead of fixed height so the box grows with resized text */
+			min-height: calc((100dvh - var(--topbar-height)) / 2);
+			padding: 1.25rem 0;
 			text-decoration: none;
 			color: var(--text);
 		}
@@ -120,12 +122,13 @@
 			background: rgba(var(--rio-med-blue-rgb), 0.9);
 		}
 
+		/* Hover keeps overlay >= 0.85 so text contrast stays above the 3:1 large-text bar (WCAG 1.4.3) */
 		.portal-panel.left:hover .overlay-green {
-			background: rgba(var(--rio-green-rgb), 0.75);
+			background: rgba(var(--rio-green-rgb), 0.85);
 		}
 
 		.portal-panel.right:hover .overlay-blue {
-			background: rgba(var(--rio-med-blue-rgb), 0.75);
+			background: rgba(var(--rio-med-blue-rgb), 0.85);
 		}
 
 		.panel-content {
@@ -182,7 +185,7 @@
 			}
 
 			.portal-panel {
-				height: calc(100dvh - var(--topbar-height));
+				min-height: calc(100dvh - var(--topbar-height));
 			}
 
 			.panel-title {
@@ -206,53 +209,45 @@
 
 <body>
 	<!-- Google Tag Manager (noscript) -->
-	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4H4CS9S" height="0" width="0"
-			style="display:none;visibility:hidden"></iframe></noscript>
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4H4CS9S" title="Google Tag Manager" height="0"
+			width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
 
 	<a class="skip-link" href="#main-content">Skip to main content</a>
 
 	<header class="top-bar fixed-top d-flex align-items-center justify-content-center">
-		<img src="https://www.riohondo.edu/wp-content/uploads/2023/08/AccessRIO.png" alt="AccessRío"
-			style="height: 40px;">
+		<img src="https://www.riohondo.edu/wp-content/uploads/2023/08/AccessRIO.png" alt="AccessRío" style="height: 40px;">
 	</header>
 
 	<main id="main-content" class="container-fluid p-0" tabindex="-1">
 		<h1 class="visually-hidden">AccessRío Portal version selection</h1>
-
 		<div class="row g-0 main-panels">
 			<div class="col-12 col-lg-6">
 				<a href="https://experience.elluciancloud.com/rhc?utm_source=pickpage&utm_medium=website&utm_campaign=new_accessrio_promo"
-					class="portal-panel right" aria-label="Preview upcoming AccessRío Portal" target="_top">
-					<img src="https://page.riohondo.edu/wp-content/uploads/2026/05/upcoming-accessrio-noid-nosurvey.webp"
-						alt="" class="panel-image">
-					<div class="panel-overlay overlay-blue"></div>
+					class="portal-panel left">
+					<img src="https://page.riohondo.edu/wp-content/uploads/2026/05/upcoming-accessrio-noid-nosurvey.webp" alt=""
+						class="panel-image">
+					<div class="panel-overlay overlay-green"></div>
 					<div class="panel-content">
-						<h2 class="panel-title">New</h2>
+						<span class="panel-badge">Visit</span>
+						<h2 class="panel-title">New<span class="visually-hidden"> AccessRío Portal</span></h2>
 						<p class="panel-subtitle">AccessRío Portal</p>
 					</div>
 				</a>
 			</div>
 
 			<div class="col-12 col-lg-6">
-				<a href="https://accessrio.riohondo.edu" class="portal-panel left" target="_top"
-					aria-label="Visit current AccessRío Portal">
+				<a href="https://accessrio.riohondo.edu" class="portal-panel right">
 					<img src="https://page.riohondo.edu/wp-content/uploads/2026/05/current-accessrio.webp" alt=""
 						class="panel-image">
-					<div class="panel-overlay overlay-green"></div>
+					<div class="panel-overlay overlay-blue"></div>
 					<div class="panel-content">
-						<h2 class="panel-title">Old</h2>
+						<span class="panel-badge">Visit</span>
+						<h2 class="panel-title">Old<span class="visually-hidden"> AccessRío Portal</span></h2>
 						<p class="panel-subtitle">AccessRío Portal</p>
-						<p class="panel-subtitle" style="padding-top: 12px; font-size: 1.1rem; font-weight: normal; line-height: 1.5; margin-bottom: 0;">
-							<!-- <span style="font-weight: bold; display: block; margin-bottom: 4px;">Note:</span>
-							The old AccessRío Portal will still be available until
-							Friday,&nbsp;September&nbsp;18,&nbsp;2026. -->
-						</p>
 					</div>
 				</a>
 			</div>
-
-
 		</div>
 	</main>
 
